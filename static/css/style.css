@@ -1,0 +1,28 @@
+/* Set custom CSS variables */
+:root{
+    --brand-orange: #ff8b04;
+    --brand-light-blue: #9fcdff;
+    --brand-dark-blue: #5284ff;
+  }
+  
+/* Override Bootstrap Defaults */
+.btn-primary {
+--bs-btn-color: #fff;
+--bs-btn-bg: var(--brand-orange);
+--bs-btn-border-color: var(--brand-orange);
+--bs-btn-hover-color: #fff;
+--bs-btn-hover-bg: #222;
+--bs-btn-hover-border-color: #444;
+--bs-btn-focus-shadow-rgb: 49,132,253;
+--bs-btn-active-color: #fff;
+--bs-btn-active-bg: var(--brand-orange);
+--bs-btn-active-border-color: var(--brand-orange);
+--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+--bs-btn-disabled-color: #fff;
+--bs-btn-disabled-bg: var(--brand-orange);
+--bs-btn-disabled-border-color: var(--brand-orange);
+}
+
+.nav-link:hover {
+color: var(--brand-orange);
+}
