@@ -23,6 +23,33 @@
 --bs-btn-disabled-border-color: var(--brand-orange);
 }
 
+body {
+  background-color: #eee;
+}
+
 .nav-link:hover {
-color: var(--brand-orange);
+  color: var(--brand-orange);
+}
+
+.card-body {
+  padding: 0;
+}
+
+.card-img-top {
+  height: 22rem;
+  object-fit: contain;
+}
+
+.card-link {
+  text-decoration: none;
+  color: #333;
+  transition: color ease-in .2s;
+}
+
+.card-link:hover {
+  color: var(--brand-orange);
+}
+
+.card-author {
+  color: var(--brand-orange);
 }
