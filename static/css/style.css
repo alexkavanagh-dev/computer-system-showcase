@@ -53,3 +53,9 @@ body {
 .card-author {
   color: var(--brand-orange);
 }
+
+.featured-ribbon {
+  position: absolute;
+  width: 8rem;
+  height: 8Srem;
+}
