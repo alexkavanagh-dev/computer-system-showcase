@@ -23,13 +23,19 @@
 --bs-btn-disabled-border-color: var(--brand-orange);
 }
 
+/* General Styling */
+
 body {
   background-color: #eee;
 }
 
+/* NavBar */
+
 .nav-link:hover {
   color: var(--brand-orange);
 }
+
+/* Cards Post View */
 
 .card-body {
   padding: 0;
@@ -58,4 +64,27 @@ body {
   position: absolute;
   width: 8rem;
   height: 8Srem;
+}
+
+/* Hero Image */
+
+#hero-container {
+  height: 80vh;
+  width: 100vw;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+#hero-container:before {
+  content: "";
+  position: absolute;
+  top: 76px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #212529;
+  opacity: 0.5;
+  height: 80vh;
+  width: 100vw;
 }
