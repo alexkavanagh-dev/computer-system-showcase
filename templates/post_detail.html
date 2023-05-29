@@ -1,0 +1,20 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <!-- Main Image/Placeholder -->
+        <div id="post-main-img" class="col-10 mx-auto my-3 bg-dark text-center rounded">
+            {% if "placeholder" in post.main_image.url %}
+            <img src="https://res.cloudinary.com/dfnacox6p/image/upload/v1684860661/card-placeholder_kan0ph.webp" class="img-fluid  bg-white">
+            {% else %}
+            <img src="{{ post.main_image.url }}" class="img-fluid">
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+<p>{{ post.author }}</p>

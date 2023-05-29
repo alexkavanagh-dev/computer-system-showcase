@@ -92,3 +92,9 @@ body {
 #hero-text {
   z-index: 1;
 }
+
+/* Post Detail view styling */
+
+#post-main-img img {
+  max-height: 50vh;
+}
