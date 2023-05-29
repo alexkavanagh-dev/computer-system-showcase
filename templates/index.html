@@ -30,7 +30,7 @@
                         <img src="{{ post.main_image.url }}" class="card-img-top bg-dark">
                         {% endif %}
                         <div class="card-body m-3">
-                            <a href="#" class="card-link"><h2>{{ post.title }}</h2></a>
+                            <a href="{% url 'post_detail' post.slug %}" class="card-link"><h2>{{ post.title }}</h2></a>
                             <p class="card-text text-muted d-inline">by: <span class="card-author">{{ post.author }}</span></p>
                             <i class="fa-regular fa-thumbs-up float-end"> {{ post.number_of_likes }}</i>
                         </div>
