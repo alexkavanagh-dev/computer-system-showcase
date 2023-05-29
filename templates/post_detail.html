@@ -16,7 +16,7 @@
 
     <!-- Title, Author & Like counter -->
     <div class="row">
-        <div class="col-10 d-flex justify-content-between align-items-center mx-auto rounded">
+        <div class="col-10 d-flex justify-content-between align-items-center mb-3 mx-auto rounded">
             <div class="my-2">
                 <h3 class="d-inline me-2">{{ post.title }}</h3>
                 <p class="d-inline text-muted"> by: <span class="card-author">{{ post.author }}</span></p>
@@ -24,8 +24,67 @@
             <i class="fa-regular fa-thumbs-up"> {{ post.number_of_likes }}</i>
         </div>
     </div>
+
+    <!-- Post Body & Parts List -->
+
+    <div class="row">
+        <div class="col-10 bg-white mx-auto rounded">
+            <!-- Body -->
+            <div id="post-body" class="m-3">
+                <h3>Description</h3>
+                <p>{{ post.body | safe }}</p>
+            </div>
+
+            <hr>
+            <!-- Parts List -->
+            <div id="post-parts-list" class="row m-1">
+                <h3>Parts List</h3>
+                <ul class="col-4 list-group list-group-flush w-100">
+                    <li class="d-flex justify-content-between list-group-item list-group-item-light">
+                        <p class="col-4 d-inline my-1">Processor</p>
+                        <p class="col-8 d-inline my-1">{{ post.processor }}</p>
+                    </li>
+                    <li class="d-flex justify-content-between list-group-item">
+                        <p class="col-4 d-inline my-1">Cooler</p>
+                        <p class="col-8 d-inline my-1">{{ post.cooler }}</p>
+                    </li>
+                    <li class="d-flex justify-content-between list-group-item list-group-item-light">
+                        <p class="col-4 d-inline my-1">Motherboard</p>
+                        <p class="col-8 d-inline my-1">{{ post.motherboard }}</p>
+                    </li>
+                    <li class="d-flex justify-content-between list-group-item">
+                        <p class="col-4 d-inline my-1">Memory</p>
+                        <p class="col-8 d-inline my-1">{{ post.memory }}</p>
+                    </li>
+                    <li class="d-flex justify-content-between list-group-item list-group-item-light">
+                        <p class="col-4 d-inline my-1">Storage</p>
+                        <p class="col-8 d-inline my-1">{{ post.storage }}</p>
+                    </li>
+                    <li class="d-flex justify-content-between list-group-item">
+                        <p class="col-4 d-inline my-1">Graphics Card</p>
+                        <p class="col-8 d-inline my-1">{{ post.graphics_card }}</p>
+                    </li>
+                    <li class="d-flex justify-content-between list-group-item list-group-item-light">
+                        <p class="col-4 d-inline my-1">Case</p>
+                        <p class="col-8 d-inline my-1">{{ post.case }}</p>
+                    </li>
+                    <li class="d-flex justify-content-between list-group-item">
+                        <p class="col-4 d-inline my-1">Power Supply</p>
+                        <p class="col-8 d-inline my-1">{{ post.power_supply }}</p>
+                    </li>
+                    <li class="d-flex justify-content-between list-group-item list-group-item-light">
+                        <p class="col-4 d-inline my-1">Operating System</p>
+                        <p class="col-8 d-inline my-1">{{ post.operating_system }}</p>
+                    </li>
+                    <li class="d-flex justify-content-between list-group-item">
+                        <p class="col-4 d-inline my-1">Additional Parts</p>
+                        <p class="col-8 d-inline my-1">{{ post.additional_parts }}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 {% endblock content %}
-<p>{{ post.author }}</p>
