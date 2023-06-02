@@ -16,7 +16,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-dark d-flex justify-content-around" data-bs-theme="dark">
         <div class="container">
-            <a class="navbar-brand" href="#"><img src="{% static 'img/text-logo-css.webp' %}" alt="computer system showcase logo" width="100" height="50"></a>
+            <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'img/text-logo-css.webp' %}" alt="computer system showcase logo" width="100" height="50"></a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -25,13 +25,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Builds</a>
+                        <a class="nav-link" href="{% url 'home' %}#post-list">Builds</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sign Up!</a>
+                        <a class="nav-link" href="{% url 'account_signup' %}">Sign Up!</a>
                     </li>
                 </ul>
             </div>
@@ -51,9 +51,9 @@
             <span class="text-body-secondary">© 2023 Computer System Showcase</span>
             
             <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Builds</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Sign Up!</a></li>
+                <li class="nav-item"><a href="{% url 'home' %}" class="nav-link px-2 text-body-secondary">Home</a></li>
+                <li class="nav-item"><a href="{% url 'home' %}#post-list" class="nav-link px-2 text-body-secondary">Builds</a></li>
+                <li class="nav-item"><a href="{% url 'account_signup' %}" class="nav-link px-2 text-body-secondary">Sign Up!</a></li>
             </ul>
         </div>
     </footer>
