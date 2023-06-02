@@ -30,9 +30,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'home' %}#post-list">Builds</a>
                     </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                    </li>
+                    {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'account_signup' %}">Sign Up!</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -53,7 +62,18 @@
             <ul class="nav col-md-4 justify-content-end">
                 <li class="nav-item"><a href="{% url 'home' %}" class="nav-link px-2 text-body-secondary">Home</a></li>
                 <li class="nav-item"><a href="{% url 'home' %}#post-list" class="nav-link px-2 text-body-secondary">Builds</a></li>
-                <li class="nav-item"><a href="{% url 'account_signup' %}" class="nav-link px-2 text-body-secondary">Sign Up!</a></li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link px-2 text-body-secondary" href="{% url 'account_logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link px-2 text-body-secondary" href="{% url 'account_signup' %}">Sign Up!</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-2 text-body-secondary" href="{% url 'account_login' %}">Login</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </footer>
