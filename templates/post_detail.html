@@ -23,7 +23,18 @@
                 <h3 class="d-inline me-2">{{ post.title }}</h3>
                 <p class="d-inline text-muted"> by: <span class="card-author">{{ post.author }}</span></p>
             </div>
+            {% if user.is_authenticated %}
+            <form class="d-inline" action="{% url 'post_like' post.slug %}" method="POST">
+                {% csrf_token %}
+                {% if liked %}
+                <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary"><i class="fa-solid fa-thumbs-up"> {{ post.number_of_likes }}</i></button>
+                {% else %}
+                <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary"><i class="fa-regular fa-thumbs-up"> {{ post.number_of_likes }}</i></button>
+                {% endif %}
+            </form>
+            {% else %}
             <i class="fa-regular fa-thumbs-up"> {{ post.number_of_likes }}</i>
+            {% endif %}
         </div>
     </div>
 
