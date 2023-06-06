@@ -32,7 +32,19 @@
                         <div class="card-body m-3">
                             <a href="{% url 'post_detail' post.slug %}" class="card-link"><h2>{{ post.title }}</h2></a>
                             <p class="card-text text-muted d-inline">by: <span class="card-author">{{ post.author }}</span></p>
+                            <!-- Like Buttons -->
+                            {% if user.is_authenticated %}
+                            <form class="d-inline" action="{% url 'post_like' post.slug %}" method="POST">
+                                {% csrf_token %}
+                                {% if user in post.likes.all %}
+                                <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary btn-sm float-end"><i class="fa-solid fa-thumbs-up"> {{ post.number_of_likes }}</i></button>
+                                {% else %}
+                                <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary btn-sm float-end"><i class="fa-regular fa-thumbs-up"> {{ post.number_of_likes }}</i></button>
+                                {% endif %}
+                            </form>
+                            {% else %}
                             <i class="fa-regular fa-thumbs-up float-end"> {{ post.number_of_likes }}</i>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
