@@ -77,3 +77,7 @@ class PostLike(View):
             post.likes.add(request.user)
 
         return HttpResponseRedirect(self.request.META['HTTP_REFERER'])
+
+
+def add_post(request):
+    return render(request, 'add_post.html')
