@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404, reverse
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.views import generic, View
 from django.http import HttpResponseRedirect
+from django.utils.text import slugify
 from .models import Post
-from .forms import CommentForm
+from .forms import CommentForm, PostForm
 
 
 class PostList(generic.ListView):
@@ -80,4 +81,22 @@ class PostLike(View):
 
 
 def add_post(request):
-    return render(request, 'add_post.html')
+
+    if request.method == 'POST':
+        post_form = PostForm(data=request.POST, files=request.FILES)
+
+        if post_form.is_valid():
+            new_post = post_form.save(commit=False)
+            post_form.instance.email = request.user.email
+            post_form.instance.author = request.user
+            new_post.slug = slugify(new_post.title)
+            new_post.save()
+            return redirect(reverse('home'))
+        else:
+            print(post_form.errors)
+            post_form = PostForm()
+
+    else:
+        post_form = PostForm()
+
+    return render(request, 'add_post.html', {"post_form": post_form})

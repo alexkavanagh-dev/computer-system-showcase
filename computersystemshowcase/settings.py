@@ -31,7 +31,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['computer-system-showcase.herokuapp.com', 'localhost', '8000-alexkavanag-computersys-s8h9imapolj.ws-eu97.gitpod.io', '8000-alexkavanag-computersys-s8h9imapolj.ws-eu98.gitpod.io',
-'8000-alexkavanag-computersys-r8zxgf902p0.ws-eu98.gitpod.io']
+'8000-alexkavanag-computersys-r8zxgf902p0.ws-eu98.gitpod.io',
+'8000-alexkavanag-computersys-r8zxgf902p0.ws-eu99.gitpod.io']
 
 
 # Application definition
