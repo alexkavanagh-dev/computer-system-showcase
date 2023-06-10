@@ -100,3 +100,36 @@ def add_post(request):
         post_form = PostForm()
 
     return render(request, 'add_post.html', {"post_form": post_form})
+
+
+def edit_post(request, slug):
+
+    queryset = Post.objects
+    post = get_object_or_404(queryset, slug=slug)
+    edit_form = PostForm(instance=post)
+
+    if request.user.id == post.author.id:
+        if request.method == 'POST':
+
+            edit_form = PostForm(data=request.POST, files=request.FILES, instance=post)
+
+            if edit_form.is_valid():
+                new_post = edit_form.save(commit=False)
+                edit_form.instance.email = request.user.email
+                edit_form.instance.author = request.user
+                new_post.slug = slugify(new_post.title)
+                new_post.save()
+                return redirect(reverse('home'))
+            else:
+                edit_form = PostForm(instance=post)
+
+    else:
+        edit_form = PostForm()
+
+    template = 'edit_post.html'
+    context = {
+        'post_form': edit_form,
+        'post': post,
+    }
+
+    return render(request, template, context)
