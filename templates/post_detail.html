@@ -135,6 +135,9 @@
                 <div class="comment bg-light rounded p-3">
                     <p class="d-inline fw-bold card-author">{{ comment.author }}</p>
                     <p class="d-inline fw-light"> wrote:</p>
+                    {% if user.id == comment.author.id %}
+                    <a class="btn btn-sm btn-danger d-inline float-end" href="{% url 'delete_comment' comment.id %}">DELETE</a>
+                    {% endif %}
                     <p >{{ comment.body | linebreaks }}</p>
                 </div>
                 <hr>

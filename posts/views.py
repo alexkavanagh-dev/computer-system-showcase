@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.views import generic, View
 from django.http import HttpResponseRedirect
 from django.utils.text import slugify
-from .models import Post
+from .models import Post, Comment
 from .forms import CommentForm, PostForm
 
 
@@ -146,3 +146,14 @@ def delete_post(request, slug):
         return redirect(reverse('home'))
 
     return redirect(reverse('home'))
+
+
+def delete_comment(request, id):
+
+    queryset = Comment.objects
+    comment = get_object_or_404(queryset, id=id)
+
+    if request.user.id == comment.author.id:
+        comment.delete()
+
+        return redirect(reverse('home'))
