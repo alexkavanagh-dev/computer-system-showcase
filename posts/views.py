@@ -133,3 +133,16 @@ def edit_post(request, slug):
     }
 
     return render(request, template, context)
+
+
+def delete_post(request, slug):
+
+    queryset = Post.objects
+    post = get_object_or_404(queryset, slug=slug)
+
+    if request.user.id == post.author.id:
+        post.delete()
+
+        return redirect(reverse('home'))
+
+    return redirect(reverse('home'))
