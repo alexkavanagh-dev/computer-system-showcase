@@ -24,7 +24,29 @@
                 <p class="d-inline text-muted"> by: <span class="card-author">{{ post.author }}</span></p>
                 {% if user.id == post.author.id %}
                 <a class="btn btn-sm btn-primary" href="{% url 'edit_post' post.slug %}">EDIT</a>
-                <a class="btn btn-sm btn-danger" href="{% url 'delete_post' post.slug %}">DELETE</a>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePostModal">
+                        DELETE
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="deletePostModal" tabindex="-1" aria-labelledby="deletePostModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="deletePostModalLabel">Are you sure you want to delete this post?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            This action cannot be undone.
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <a class="btn btn-danger" href="{% url 'delete_post' post.slug %}">DELETE</a>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                 {% endif %}
             </div>
             {% if user.is_authenticated %}
