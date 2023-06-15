@@ -46,6 +46,12 @@ body {
   object-fit: contain;
 }
 
+.card-title, .card-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .card-link {
   text-decoration: none;
   color: #333;
