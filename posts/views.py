@@ -10,7 +10,7 @@ class PostList(generic.ListView):
     model = Post
     querySet = Post.objects.order_by('-created_on')
     template_name = 'index.html'
-    paginate_by = 10
+    paginate_by = 8
 
 
 class PostDetail(View):
