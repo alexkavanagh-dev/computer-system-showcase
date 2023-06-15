@@ -98,3 +98,11 @@ body {
 #post-main-img img {
   max-height: 50vh;
 }
+
+/* Add/Edit Post form styling */
+form .form-group {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
