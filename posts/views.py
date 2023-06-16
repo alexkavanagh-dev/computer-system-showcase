@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.views import generic, View
 from django.http import HttpResponseRedirect
 from django.utils.text import slugify
+from django.contrib import messages
 from .models import Post, Comment
 from .forms import CommentForm, PostForm
 
@@ -50,8 +51,10 @@ class PostDetail(View):
             comment_form.instance.author = request.user
             comment = comment_form.save(commit=False)
             comment.post = post
+            messages.success(request, 'Your comment is now awaiting approval!')
             comment.save()
         else:
+            messages.error(request, 'Please check that your form has been filled correctly.')
             comment_form = CommentForm()
 
         return render(
@@ -91,9 +94,10 @@ def add_post(request):
             post_form.instance.author = request.user
             new_post.slug = slugify(new_post.title)
             new_post.save()
+            messages.success(request, 'Your post was created successfully!')
             return redirect(reverse('home'))
         else:
-            print(post_form.errors)
+            messages.error(request, 'Please check that your form has been filled correctly.')
             post_form = PostForm()
 
     else:
@@ -119,12 +123,15 @@ def edit_post(request, slug):
                 edit_form.instance.author = request.user
                 new_post.slug = slugify(new_post.title)
                 new_post.save()
+                messages.success(request, 'Your post was edited successfully!')
                 return redirect(reverse('home'))
             else:
+                messages.error(request, 'Please check that your form has been filled correctly.')
                 edit_form = PostForm(instance=post)
 
     else:
-        edit_form = PostForm()
+        messages.error(request, 'Sorry, you do not have permission to perform that action.')
+        return redirect(reverse('home'))
 
     template = 'edit_post.html'
     context = {
@@ -142,10 +149,12 @@ def delete_post(request, slug):
 
     if request.user.id == post.author.id:
         post.delete()
-
+        messages.success(request, 'Your post was deleted successfully!')
         return redirect(reverse('home'))
 
-    return redirect(reverse('home'))
+    else:
+        messages.error(request, 'Sorry, you do not have permission to perform that action.')
+        return redirect(reverse('home'))
 
 
 def delete_comment(request, id):
@@ -155,5 +164,8 @@ def delete_comment(request, id):
 
     if request.user.id == comment.author.id:
         comment.delete()
-
+        messages.success(request, 'Your comment was deleted successfully!')
         return redirect(reverse('home'))
+
+    else:
+        messages.error(request, 'Sorry, you do not have permission to perform that action.')
