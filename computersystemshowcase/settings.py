@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from django.contrib.messages import constants as messages
 import dj_database_url
 if os.path.isfile('env.py'):
     import env
@@ -32,7 +33,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['computer-system-showcase.herokuapp.com', 'localhost', '8000-alexkavanag-computersys-s8h9imapolj.ws-eu97.gitpod.io', '8000-alexkavanag-computersys-s8h9imapolj.ws-eu98.gitpod.io',
 '8000-alexkavanag-computersys-r8zxgf902p0.ws-eu98.gitpod.io',
-'8000-alexkavanag-computersys-r8zxgf902p0.ws-eu99.gitpod.io']
+'8000-alexkavanag-computersys-r8zxgf902p0.ws-eu99.gitpod.io',
+'8000-alexkavanag-computersys-r8zxgf902p0.ws-eu100.gitpod.io']
 
 
 # Application definition
@@ -59,6 +61,14 @@ SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-info',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+    }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
