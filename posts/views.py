@@ -20,6 +20,7 @@ class PostDetail(View):
         queryset = Post.objects
         post = get_object_or_404(queryset, slug=slug)
         comments = post.comments.filter(approved=True).order_by('-created_on')
+        unapproved_comments = post.comments.filter(approved=False).order_by('-created_on')
         liked = False
         if post.likes.filter(id=self.request.user.id).exists():
             liked = True
@@ -30,6 +31,7 @@ class PostDetail(View):
             {
                 "post": post,
                 "comments": comments,
+                "unapproved_comments": unapproved_comments,
                 "liked": liked,
                 "commented": False,
                 "comment_form": CommentForm()
@@ -169,3 +171,20 @@ def delete_comment(request, id):
 
     else:
         messages.error(request, 'Sorry, you do not have permission to perform that action.')
+
+
+def approve_comment(request, id):
+
+    if request.user.is_superuser:
+
+        queryset = Comment.objects
+        comment = get_object_or_404(queryset, id=id)
+
+        comment.approved = True
+        comment.save()
+        messages.success(request, 'Comment was approved successfully!')
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+    else:
+        messages.error(request, 'Sorry, you do not have permission to perform that action.')
+        return redirect(reverse('home'))
