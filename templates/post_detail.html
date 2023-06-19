@@ -124,6 +124,20 @@
         </div>
     </div>
 
+    
+    <div class="row">
+        <div class="col-10 mx-auto justify-content-start">
+        {% if user.is_superuser %}
+        {% if post.featured_post %}
+        <a class="btn btn btn-danger d-block" href="{% url 'feature_post' post.slug %}">Unfeature this post!</a>
+        {% else %}
+        <a class="btn btn btn-success d-block" href="{% url 'feature_post' post.slug %}">Feature this post!</a>
+        {% endif %}
+        {% endif %}
+        </div>
+    </div>
+    
+
     <!-- Comment Form (if logged in) -->
     {% if commented %}
     <div class="row">

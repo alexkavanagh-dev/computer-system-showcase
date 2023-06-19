@@ -188,3 +188,28 @@ def approve_comment(request, id):
     else:
         messages.error(request, 'Sorry, you do not have permission to perform that action.')
         return redirect(reverse('home'))
+
+
+def feature_post(request, slug):
+
+    if request.user.is_superuser:
+
+        queryset = Post.objects
+        post = get_object_or_404(queryset, slug=slug)
+
+        if post.featured_post:
+
+            post.featured_post = False
+            post.save()
+            messages.success(request, 'Post was unfeatured successfully!')
+            return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+        else:
+            post.featured_post = True
+            post.save()
+            messages.success(request, 'Post was featured successfully!')
+            return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+    else:
+        messages.error(request, 'Sorry, you do not have permission to perform that action.')
+        return redirect(reverse('home'))
