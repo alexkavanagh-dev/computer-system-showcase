@@ -51,10 +51,16 @@ class PostDetail(View):
         if comment_form.is_valid():
             comment_form.instance.email = request.user.email
             comment_form.instance.author = request.user
+            awaiting_approval = True
+            if request.user.is_superuser:
+                comment_form.instance.approved = True
+                awaiting_approval = False
+
+            messages.success(request, 'Comment made successfully!')
             comment = comment_form.save(commit=False)
             comment.post = post
-            messages.success(request, 'Your comment is now awaiting approval!')
             comment.save()
+            comment_form = CommentForm()
         else:
             messages.error(request, 'Please check that your form has been filled correctly.')
             comment_form = CommentForm()
@@ -65,7 +71,7 @@ class PostDetail(View):
             {
                 "post": post,
                 "comments": comments,
-                "commented": True,
+                "awaiting_approval": awaiting_approval,
                 "comment_form": comment_form,
                 "liked": liked
             },
