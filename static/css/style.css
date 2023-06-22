@@ -105,6 +105,11 @@ body {
   max-height: 50vh;
 }
 
+#post-title-buttons {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Add/Edit Post form styling */
 form .form-group {
   margin-bottom: 1rem;
