@@ -21,14 +21,16 @@
             {% for post in post_list %}
                 <div id="post-thumb" class="col-lg-3">
                     <div class="card mb-4">
-                        {% if post.featured_post %}
-                        <div><img class="featured-ribbon" src="https://res.cloudinary.com/dfnacox6p/image/upload/v1684849798/featured-ribbon_mszi26.png" alt=""></div>
-                        {% endif %}
-                        {% if "placeholder" in post.main_image.url %}
-                        <img src="https://res.cloudinary.com/dfnacox6p/image/upload/v1684860661/card-placeholder_kan0ph.webp" class="card-img-top bg-white">
-                        {% else %}
-                        <img src="{{ post.main_image.url }}" class="card-img-top bg-dark">
-                        {% endif %}
+                        <a href="{% url 'post_detail' post.slug %}" class="card-link">
+                            {% if post.featured_post %}
+                            <div><img class="featured-ribbon" src="https://res.cloudinary.com/dfnacox6p/image/upload/v1684849798/featured-ribbon_mszi26.png" alt=""></div>
+                            {% endif %}
+                            {% if "placeholder" in post.main_image.url %}
+                            <img src="https://res.cloudinary.com/dfnacox6p/image/upload/v1684860661/card-placeholder_kan0ph.webp" class="card-img-top bg-white">
+                            {% else %}
+                            <img src="{{ post.main_image.url }}" class="card-img-top bg-dark">
+                            {% endif %}
+                        </a>
                         <div class="card-body mx-3">
                             <div class="card-title my-2">
                                 <a href="{% url 'post_detail' post.slug %}" class="card-link"><h3 class="d-inline">{{ post.title }}</h3></a>
