@@ -41,9 +41,18 @@ body {
   padding: 0;
 }
 
+.card-img-link {
+  overflow: hidden;
+}
+
 .card-img-top {
   height: 22rem;
   object-fit: contain;
+  transition: all .3s;
+}
+
+.card-img-top:hover {
+  transform: scale(1.2);
 }
 
 .card-title, .card-text {
@@ -70,6 +79,7 @@ body {
   position: absolute;
   width: 8rem;
   height: 8Srem;
+  z-index: 3;
 }
 
 /* Hero Image */
