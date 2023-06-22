@@ -219,6 +219,10 @@
                     <p >{{ comment.body | linebreaks }}</p>
                 </div>
                 <hr>
+                {% empty %}
+                <div class="comment bg-light rounded p-3">
+                    <h4 class="text-center my-3 py-2 rounded bg-light">No comments yet!</h4>
+                </div>
                 {% endfor %}
             </div>
         </div>
