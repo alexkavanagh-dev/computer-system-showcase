@@ -55,9 +55,8 @@
                             <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
-                            <form class="dropdown-menu dropdown-menu-end p-3" method="GET">
-                                {% csrf_token %}
-                                <input type="email" class="form-control" id="search-query" placeholder="Search">
+                            <form class="dropdown-menu dropdown-menu-end p-3" action="{% url 'search_posts' %}" method="GET">
+                                <input type="search" class="form-control" placeholder="Search" name="q" required>
                                 <button type="submit" class="btn mt-2 btn-primary">Submit</button>
                             </form>
                         </div>

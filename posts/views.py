@@ -3,6 +3,7 @@ from django.views import generic, View
 from django.http import HttpResponseRedirect
 from django.utils.text import slugify
 from django.contrib import messages
+from django.db.models import Q
 from .models import Post, Comment
 from .forms import CommentForm, PostForm
 
@@ -218,4 +219,23 @@ def feature_post(request, slug):
 
     else:
         messages.error(request, 'Sorry, you do not have permission to perform that action.')
+        return redirect(reverse('home'))
+
+
+def search_posts(request):
+
+    if request.method == "GET":
+        search_query = request.GET.get("q")
+        query_results = Post.objects.filter(
+            Q(title__icontains=search_query) | Q(body__icontains=search_query)
+        )
+
+        template = 'search.html'
+        context = {
+            'query_results': query_results,
+            }
+        return render(request, "search.html", context)
+
+    else:
+        messages.error(request, 'Sorry, something went wrong. Sending you back to home!')
         return redirect(reverse('home'))
