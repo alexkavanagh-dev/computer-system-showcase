@@ -50,6 +50,18 @@
                         <a class="nav-link" href="{% url 'account_login' %}">Login</a>
                     </li>
                     {% endif %}
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                            <form class="dropdown-menu dropdown-menu-end p-3" method="GET">
+                                {% csrf_token %}
+                                <input type="email" class="form-control" id="search-query" placeholder="Search">
+                                <button type="submit" class="btn mt-2 btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -108,6 +120,8 @@
             let alert = new bootstrap.Alert(messages);
             alert.close();
         }, 3500);
+
+
     </script>
 </body>
 
