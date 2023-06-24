@@ -225,10 +225,23 @@ def feature_post(request, slug):
 def search_posts(request):
 
     if request.method == "GET":
+
         search_query = request.GET.get("q")
+
         query_results = Post.objects.filter(
-            Q(title__icontains=search_query) | Q(body__icontains=search_query)
-        )
+            Q(title__icontains=search_query)
+            | Q(body__icontains=search_query)
+            | Q(processor__icontains=search_query)
+            | Q(cooler__icontains=search_query)
+            | Q(motherboard__icontains=search_query)
+            | Q(memory__icontains=search_query)
+            | Q(storage__icontains=search_query)
+            | Q(graphics_card__icontains=search_query)
+            | Q(case__icontains=search_query)
+            | Q(power_supply__icontains=search_query)
+            | Q(operating_system__icontains=search_query)
+            | Q(additional_parts__icontains=search_query)
+            )
 
         template = 'search.html'
         context = {
