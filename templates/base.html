@@ -76,7 +76,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-8 offset-md-2 position-absolute mt-5 z-3 ">
+            <div class="col-md-8 position-fixed top-25 start-50 translate-middle mt-5 text-center z-3">
                 {% for message in messages %}
                 <div class="alert {{ message.tags }} alert-dismissible fade show" id="message" role="alert">
                     {{ message | safe }}

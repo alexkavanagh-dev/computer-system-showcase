@@ -78,8 +78,8 @@ body {
 .featured-ribbon {
   position: absolute;
   width: 8rem;
-  height: 8Srem;
-  z-index: 3;
+  height: 8rem;
+  z-index: 2;
 }
 
 /* Hero Image */
