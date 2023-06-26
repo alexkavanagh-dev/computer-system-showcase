@@ -4,6 +4,8 @@ from django.http import HttpResponseRedirect
 from django.utils.text import slugify
 from django.contrib import messages
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from .models import Post, Comment
 from .forms import CommentForm, PostForm
 
@@ -78,7 +80,7 @@ class PostDetail(View):
             },
         )
 
-
+@method_decorator(login_required, name="dispatch")
 class PostLike(View):
 
     def post(self, request, slug):
@@ -92,6 +94,7 @@ class PostLike(View):
         return HttpResponseRedirect(self.request.META['HTTP_REFERER'])
 
 
+@login_required
 def add_post(request):
 
     if request.method == 'POST':
@@ -115,6 +118,7 @@ def add_post(request):
     return render(request, 'add_post.html', {"post_form": post_form})
 
 
+@login_required
 def edit_post(request, slug):
 
     queryset = Post.objects
@@ -151,6 +155,7 @@ def edit_post(request, slug):
     return render(request, template, context)
 
 
+@login_required
 def delete_post(request, slug):
 
     queryset = Post.objects
@@ -166,6 +171,7 @@ def delete_post(request, slug):
         return redirect(reverse('home'))
 
 
+@login_required
 def delete_comment(request, id):
 
     queryset = Comment.objects
@@ -180,6 +186,7 @@ def delete_comment(request, id):
         messages.error(request, 'Sorry, you do not have permission to perform that action.')
 
 
+@login_required
 def approve_comment(request, id):
 
     if request.user.is_superuser:
@@ -197,6 +204,7 @@ def approve_comment(request, id):
         return redirect(reverse('home'))
 
 
+@login_required
 def feature_post(request, slug):
 
     if request.user.is_superuser:
@@ -258,6 +266,7 @@ def search_posts(request):
         return redirect(reverse('home'))
 
 
+@login_required
 def account_likes(request, id):
 
     if request.user.id == id:
