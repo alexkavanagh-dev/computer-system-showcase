@@ -27,6 +27,13 @@
 
 body {
   background-color: #eee;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
 }
 
 /* NavBar */

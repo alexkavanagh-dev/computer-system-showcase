@@ -14,7 +14,7 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-dark d-flex justify-content-around" data-bs-theme="dark">
+    <nav id="main-nav" class="navbar navbar-expand-lg bg-dark d-flex justify-content-around" data-bs-theme="dark">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'img/text-logo-css.webp' %}" alt="computer system showcase logo" width="100" height="50"></a>
 
@@ -94,26 +94,29 @@
     </main>
 
     <!-- Footer -->
-    <footer class="navbar navbar-expand-lg bg-dark d-flex justify-content-around mt-3 py-3" data-bs-theme="dark">
+    <footer class="navbar navbar-expand-lg bg-dark d-flex justify-content-around py-3" data-bs-theme="dark">
         <div class="container">
   
             <span class="text-body-secondary">© 2023 Computer System Showcase</span>
             
-            <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="{% url 'home' %}" class="nav-link px-2 text-body-secondary">Home</a></li>
-                <li class="nav-item"><a href="{% url 'home' %}#post-list" class="nav-link px-2 text-body-secondary">Builds</a></li>
+            <ul class="navbar-nav col-6 justify-content-end">
+                <li class="nav-item"><a href="{% url 'home' %}" class="nav-link px-2">Home</a></li>
+                <li class="nav-item"><a href="{% url 'home' %}#post-list" class="nav-link px-2">Builds</a></li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link px-2 text-body-secondary" href="{% url 'account_logout' %}">Logout</a>
+                    <a class="nav-link px-2 " href="{% url 'account_logout' %}">Logout</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link px-2 text-body-secondary" href="{% url 'account_signup' %}">Sign Up!</a>
+                    <a class="nav-link px-2" href="{% url 'account_signup' %}">Sign Up!</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-2 text-body-secondary" href="{% url 'account_login' %}">Login</a>
+                    <a class="nav-link px-2" href="{% url 'account_login' %}">Login</a>
                 </li>
                 {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link px-2" href="#main-nav">Back to Top</a>
+                </li>
             </ul>
         </div>
     </footer>
