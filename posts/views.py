@@ -256,3 +256,20 @@ def search_posts(request):
     else:
         messages.error(request, 'Sorry, something went wrong. Sending you back to home!')
         return redirect(reverse('home'))
+
+
+def account_likes(request, id):
+
+    if request.user.id == id:
+
+        liked_posts = Post.objects.filter(likes__id=id)
+
+        template = 'account_likes.html'
+        context = {
+            'liked_posts': liked_posts,
+            }
+        return render(request, template, context)
+
+    else:
+        messages.error(request, 'Sorry, you do not have access to that page. Sending you back to home!')
+        return redirect(reverse('home'))
