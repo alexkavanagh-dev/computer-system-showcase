@@ -36,6 +36,10 @@ footer {
   margin-top: auto;
 }
 
+.word-wrap-break {
+  word-wrap: break-word;
+}
+
 /* NavBar */
 
 .nav-link:hover {
