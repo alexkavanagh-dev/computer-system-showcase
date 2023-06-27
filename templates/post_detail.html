@@ -166,7 +166,7 @@
         <div class="col-md-10 mx-auto">
             {% if user.is_superuser %}
             <div id="unapproved-comments" class="my-3">
-                <h3>Unapproved Comments</h3>
+                <h3>Comments For Review</h3>
                 {% for comment in unapproved_comments %}
                 <hr>
                 <div class="comment bg-light rounded p-3">
@@ -180,7 +180,9 @@
                 </div>
                 {% empty %}
                 <hr>
-                <h4 class="text-center my-3 py-3 rounded bg-light">No comments awaiting approval!</h4>
+                <div class="comment bg-light rounded p-3 mb-3">
+                    <h4 class="text-center my-3 py-2 rounded bg-light">No comments awaiting approval!</h4>
+                </div>
                 {% endfor %}
             </div>
             {% endif %}
@@ -220,7 +222,7 @@
                 </div>
                 <hr>
                 {% empty %}
-                <div class="comment bg-light rounded p-3">
+                <div class="comment bg-light rounded p-3 mb-3">
                     <h4 class="text-center my-3 py-2 rounded bg-light">No comments yet!</h4>
                 </div>
                 {% endfor %}
