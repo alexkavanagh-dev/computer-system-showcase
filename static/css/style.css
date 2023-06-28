@@ -11,8 +11,8 @@
 --bs-btn-bg: var(--brand-orange);
 --bs-btn-border-color: var(--brand-orange);
 --bs-btn-hover-color: #fff;
---bs-btn-hover-bg: #222;
---bs-btn-hover-border-color: #444;
+--bs-btn-hover-bg: #da7501;
+--bs-btn-hover-border-color: #da7501;
 --bs-btn-focus-shadow-rgb: 49,132,253;
 --bs-btn-active-color: #fff;
 --bs-btn-active-bg: var(--brand-orange);
