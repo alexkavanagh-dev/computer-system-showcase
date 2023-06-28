@@ -11,8 +11,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 mx-auto my-3">
-            <h3>Edit your Post:</h3>
-            <form class="my-5" method="POST" enctype="multipart/form-data">
+            <h2 class="my-3">Edit your Build!</h2>
+            <hr>
+            <h5 class="my-4">Made some upgrades? Update your build and show off your new hardware!</h5>
+            <form class="my-3" method="POST" enctype="multipart/form-data">
                 {{ post_form | crispy }}
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary mt-3 float-end">Submit</button>
