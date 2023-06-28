@@ -277,9 +277,13 @@ def account_likes(request, id):
 
         liked_posts = Post.objects.filter(likes__id=id)
 
+        page_number = request.GET.get("page")
+        paginator = Paginator(liked_posts, 12)
+        page_obj = paginator.get_page(page_number)
+
         template = 'account_likes.html'
         context = {
-            'liked_posts': liked_posts,
+            "page_obj": page_obj
             }
         return render(request, template, context)
 
