@@ -9,8 +9,10 @@
 <div class="container">
     <div class="row">
         <div id="post-list" class="col-12 mt-3">
-            <div class="row">
-            {% for post in query_results %}
+            <h2 class="col-10 offset-1 text-center my-3">Search Results for "{{ request.GET.q }}"</h2>
+            <hr>
+            <div class="row mt-4">
+            {% for post in page_obj %}
                 <div id="post-thumb" class="col-lg-3">
                     <div class="card mb-4">
                         <a href="{% url 'post_detail' post.slug %}" class="card-img-link">
@@ -59,6 +61,16 @@
             </div>
         </div>
     </div>
+
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li><a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}" class="btn btn-primary m-3">&laquo; PREV </a></li>
+        {% endif %}
+        {% if page_obj.has_next %}
+        <li><a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}" class="btn btn-primary m-3"> NEXT &raquo;</a></li>
+        {% endif %}
+    </ul>
+
 </div>
 
 {% endblock %}

@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.core.paginator import Paginator
 from .models import Post, Comment
 from .forms import CommentForm, PostForm
 
@@ -232,7 +233,7 @@ def feature_post(request, slug):
 
 def search_posts(request):
 
-    if request.method == "GET":
+    if request.method == "GET" and 'q' in request.GET:
 
         search_query = request.GET.get("q")
 
@@ -255,11 +256,14 @@ def search_posts(request):
                 | Q(additional_parts__icontains=search_query)
                 )
 
-        template = 'search.html'
+        page_number = request.GET.get("page")
+        paginator = Paginator(query_results, 12)
+        page_obj = paginator.get_page(page_number)
+        template = "search.html"
         context = {
-            'query_results': query_results,
-            }
-        return render(request, "search.html", context)
+            "page_obj": page_obj
+        }
+        return render(request, template, context)
 
     else:
         messages.error(request, 'Sorry, something went wrong. Sending you back to home!')
