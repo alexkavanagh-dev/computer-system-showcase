@@ -9,9 +9,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 mx-auto my-3">
+            
             <h2 class="my-3">Add your Build!</h2>
             <hr>
             <h5 class="my-4">Give your build a cool, unique title and tell everyone about it!</h5>
+
+            <!-- Form for adding post/build using cripsyforms -->
             <form class="my-3" method="POST" enctype="multipart/form-data">
                 {{ post_form | crispy }}
                 {% csrf_token %}

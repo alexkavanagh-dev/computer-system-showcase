@@ -9,7 +9,7 @@
 
 <div class="container">
     <div class="row">
-        <!-- Main Image/Placeholder -->
+        <!-- Main image/placeholder -->
         <div id="post-main-img" class="col-10 mx-auto my-3 bg-dark text-center rounded">
             {% if "placeholder" in post.main_image.url %}
             <img src="https://res.cloudinary.com/dfnacox6p/image/upload/v1684860661/card-placeholder_kan0ph.webp" class="img-fluid  bg-white" alt="Placeholder image for post">
@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <!-- Title, Author & Like counter -->
+    <!-- Post title, author & like buttons/icon -->
     <div class="row">
         <div class="col-10 d-flex justify-content-between align-items-center mb-3 mx-auto rounded">
             <div id="post-title-buttons" class="my-2">
@@ -27,38 +27,43 @@
                 <p class="d-inline text-muted"> by: <span class="card-author">{{ post.author }}</span></p>
                 {% if user.id == post.author.id %}
                 <a class="btn btn-sm btn-primary" href="{% url 'edit_post' post.slug %}" aria-label="Edit post">EDIT</a>
-                    <!-- Button trigger modal -->
+                    <!-- Delete button trigger modal -->
                     <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePostModal" aria-label="Delete post">
                         DELETE
                     </button>
 
-                    <!-- Modal -->
+                    <!-- Confirm delete modal -->
                     <div class="modal fade" id="deletePostModal" tabindex="-1" aria-labelledby="deletePostModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title" id="deletePostModalLabel">Are you sure you want to delete this post?</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deletePostModalLabel">Are you sure you want to delete this post?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                This action cannot be undone.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>
+                                    <a class="btn btn-danger" href="{% url 'delete_post' post.slug %}" aria-label="Confirm delete">DELETE</a>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                            This action cannot be undone.
-                            </div>
-                            <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>
-                            <a class="btn btn-danger" href="{% url 'delete_post' post.slug %}" aria-label="Confirm delete">DELETE</a>
-                            </div>
-                        </div>
                         </div>
                     </div>
                 {% endif %}
             </div>
+            <!-- Like buttons/icon -->
             {% if user.is_authenticated %}
             <form class="d-inline" action="{% url 'post_like' post.slug %}" method="POST">
                 {% csrf_token %}
                 {% if liked %}
-                <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary" aria-label="Like/Unlike post"><i class="fa-solid fa-thumbs-up"> {{ post.number_of_likes }}</i></button>
+                <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary" aria-label="Like/Unlike post">
+                    <i class="fa-solid fa-thumbs-up"> {{ post.number_of_likes }}</i>
+                </button>
                 {% else %}
-                <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary" aria-label="Like/Unlike post"><i class="fa-regular fa-thumbs-up"> {{ post.number_of_likes }}</i></button>
+                <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary" aria-label="Like/Unlike post">
+                    <i class="fa-regular fa-thumbs-up"> {{ post.number_of_likes }}</i>
+                </button>
                 {% endif %}
             </form>
             {% else %}
@@ -67,7 +72,7 @@
         </div>
     </div>
 
-    <!-- Post Body & Parts List -->
+    <!-- Post body & parts list -->
 
     <div class="row">
         <div class="col-10 bg-white mx-auto mb-3 rounded">
@@ -127,15 +132,15 @@
         </div>
     </div>
 
-    
+    <!-- Feature/Unfeature post button (for admin only) -->
     <div class="row">
         <div class="col-10 mx-auto justify-content-start">
         {% if user.is_superuser %}
-        {% if post.featured_post %}
-        <a class="btn btn btn-danger d-block" href="{% url 'feature_post' post.slug %}" aria-label="Unfeature post">Unfeature this post!</a>
-        {% else %}
-        <a class="btn btn btn-success d-block" href="{% url 'feature_post' post.slug %}" aria-label="Feature post">Feature this post!</a>
-        {% endif %}
+            {% if post.featured_post %}
+            <a class="btn btn btn-danger d-block" href="{% url 'feature_post' post.slug %}" aria-label="Unfeature post">Unfeature this post!</a>
+            {% else %}
+            <a class="btn btn btn-success d-block" href="{% url 'feature_post' post.slug %}" aria-label="Feature post">Feature this post!</a>
+            {% endif %}
         {% endif %}
         </div>
     </div>
@@ -167,6 +172,7 @@
     <!-- Comments -->
     <div class="row">
         <div class="col-md-10 mx-auto">
+            <!-- Comments to be reviewed by admin -->
             {% if user.is_superuser %}
             <div id="unapproved-comments" class="my-3">
                 <h3>Comments For Review</h3>
@@ -189,6 +195,7 @@
                 {% endfor %}
             </div>
             {% endif %}
+            <!-- Main comments section -->
             <h3>Comments</h3>
             <hr>
             <div id="comments">
@@ -197,33 +204,34 @@
                     <p class="d-inline fw-bold card-author">{{ comment.author }}</p>
                     <p class="d-inline fw-light"> wrote:</p>
                     {% if user.id == comment.author.id %}
-                    <!-- Button trigger modal -->
+                    <!-- Delete comment trigger modal -->
                     <button type="button" class="btn btn-sm btn-danger d-inline float-end" data-bs-toggle="modal" data-bs-target="#deleteCommentModal" aria-label="Delete comment">
                         Delete
                     </button>
                     
-                    <!-- Modal -->
+                    <!-- Confirm delete comment modal -->
                     <div class="modal fade" id="deleteCommentModal" tabindex="-1" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title" id="deleteCommentModalLabel">Are you sure you want to delete this comment?</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteCommentModalLabel">Are you sure you want to delete this comment?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                This action cannot be undone.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>
+                                    <a class="btn btn-danger" href="{% url 'delete_comment' comment.id %}" aria-label="Confirm Delete">DELETE</a>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                            This action cannot be undone.
-                            </div>
-                            <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>
-                            <a class="btn btn-danger" href="{% url 'delete_comment' comment.id %}" aria-label="Confirm Delete">DELETE</a>
-                            </div>
-                        </div>
                         </div>
                     </div>
                     {% endif %}
                     <p >{{ comment.body | linebreaks }}</p>
                 </div>
                 <hr>
+                <!-- Show message if there are no comments yet -->
                 {% empty %}
                 <div class="comment bg-light rounded p-3 mb-3">
                     <h4 class="text-center my-3 py-2 rounded bg-light">No comments yet!</h4>

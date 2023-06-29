@@ -12,13 +12,16 @@
             <h2 class="col-10 offset-1 text-center my-3">Search Results for "{{ request.GET.q }}"</h2>
             <hr>
             <div class="row mt-4">
+            <!-- List results from users search query -->
             {% for post in page_obj %}
                 <div id="post-thumb" class="col-lg-3">
                     <div class="card mb-4">
                         <a href="{% url 'post_detail' post.slug %}" class="card-img-link" aria-label="Go to post detail page">
+                            <!-- Show featured ribbon if post is featured by admin -->
                             {% if post.featured_post %}
                             <div><img class="featured-ribbon" src="https://res.cloudinary.com/dfnacox6p/image/upload/v1684849798/featured-ribbon_mszi26.png" alt="featured ribbon for post thumbnail"></div>
                             {% endif %}
+                            <!-- Show placeholder image if main image is not available -->
                             {% if "placeholder" in post.main_image.url %}
                             <img src="https://res.cloudinary.com/dfnacox6p/image/upload/v1684860661/card-placeholder_kan0ph.webp" class="card-img-top bg-white" alt="Placeholder image for post thumbnail">
                             {% else %}
@@ -27,18 +30,24 @@
                         </a>
                         <div class="card-body mx-3">
                             <div class="card-title my-2">
-                                <a href="{% url 'post_detail' post.slug %}" class="card-link"><h3 class="d-inline" aria-label="Go to post detail page">{{ post.title }}</h3></a>
+                                <a href="{% url 'post_detail' post.slug %}" class="card-link">
+                                    <h3 class="d-inline" aria-label="Go to post detail page">{{ post.title }}</h3>
+                                </a>
                             </div>
                             <div class="d-flex my-2">
                                 <p class="card-text text-muted col-9">by: <span class="card-author d-inline">{{ post.author }}</span></p>
-                                <!-- Like Buttons -->
+                                <!-- Like buttons/icon -->
                                 {% if user.is_authenticated %}
                                 <form class="col-3" action="{% url 'post_like' post.slug %}" method="POST">
                                     {% csrf_token %}
                                     {% if user in post.likes.all %}
-                                    <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary btn-sm float-end" aria-label="Like/Unlike post"><i class="fa-solid fa-thumbs-up"> {{ post.number_of_likes }}</i></button>
+                                    <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary btn-sm float-end" aria-label="Like/Unlike post">
+                                        <i class="fa-solid fa-thumbs-up"> {{ post.number_of_likes }}</i>
+                                    </button>
                                     {% else %}
-                                    <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary btn-sm float-end" aria-label="Like/Unlike post"><i class="fa-regular fa-thumbs-up"> {{ post.number_of_likes }}</i></button>
+                                    <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary btn-sm float-end" aria-label="Like/Unlike post">
+                                        <i class="fa-regular fa-thumbs-up"> {{ post.number_of_likes }}</i>
+                                    </button>
                                     {% endif %}
                                 </form>
                                 {% else %}
@@ -54,6 +63,7 @@
             </div>
             <div class="row">
             {% endif %}
+            <!-- Message if users search query returned no posts -->
             {% empty %}
             <div class="row">
                 <h4 class="text-center my-3 py-3 rounded bg-light">No posts matching that search!</h4>
@@ -62,12 +72,17 @@
         </div>
     </div>
 
+    <!-- Previous/Next page buttons if results has more than one page -->
     <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
-        <li><a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}" class="btn btn-primary m-3" aria-label="Previous page of posts">&laquo; PREV </a></li>
+        <li>
+            <a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}" class="btn btn-primary m-3" aria-label="Previous page of posts">&laquo; PREV </a>
+        </li>
         {% endif %}
         {% if page_obj.has_next %}
-        <li><a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}" class="btn btn-primary m-3" aria-label="Next page of posts"> NEXT &raquo;</a></li>
+        <li>
+            <a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}" class="btn btn-primary m-3" aria-label="Next page of posts"> NEXT &raquo;</a>
+        </li>
         {% endif %}
     </ul>
 
