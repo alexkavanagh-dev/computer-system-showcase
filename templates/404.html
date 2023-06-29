@@ -7,9 +7,9 @@
 {% block content %}
 
 <div class="container d-flex flex-column justify-content-center">
-  <img id="bg-404" class="mr-auto ml-auto align-self-center my-5 rounded" src="{% static 'img/bg-404.webp' %}" alt="404 image">
+  <img id="bg-404" class="mr-auto ml-auto align-self-center my-5 rounded" src="{% static 'img/bg-404.webp' %}" alt="404 page not found error image">
 
-  <a href="{% url 'home' %}" class="btn btn-lg btn-primary align-self-center my-3">Back to Home!</a>
+  <a href="{% url 'home' %}" class="btn btn-lg btn-primary align-self-center my-3" aria-label="Back to Homepage">Back to Home!</a>
 </div>
 
 {% endblock content %}

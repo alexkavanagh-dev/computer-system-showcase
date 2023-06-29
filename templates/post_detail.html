@@ -12,9 +12,9 @@
         <!-- Main Image/Placeholder -->
         <div id="post-main-img" class="col-10 mx-auto my-3 bg-dark text-center rounded">
             {% if "placeholder" in post.main_image.url %}
-            <img src="https://res.cloudinary.com/dfnacox6p/image/upload/v1684860661/card-placeholder_kan0ph.webp" class="img-fluid  bg-white">
+            <img src="https://res.cloudinary.com/dfnacox6p/image/upload/v1684860661/card-placeholder_kan0ph.webp" class="img-fluid  bg-white" alt="Placeholder image for post">
             {% else %}
-            <img src="{{ post.main_image.url }}" class="img-fluid">
+            <img src="{{ post.main_image.url }}" class="img-fluid" alt="Main image for post">
             {% endif %}
         </div>
     </div>
@@ -26,9 +26,9 @@
                 <h3 class="d-inline me-2">{{ post.title }}</h3>
                 <p class="d-inline text-muted"> by: <span class="card-author">{{ post.author }}</span></p>
                 {% if user.id == post.author.id %}
-                <a class="btn btn-sm btn-primary" href="{% url 'edit_post' post.slug %}">EDIT</a>
+                <a class="btn btn-sm btn-primary" href="{% url 'edit_post' post.slug %}" aria-label="Edit post">EDIT</a>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePostModal">
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePostModal" aria-label="Delete post">
                         DELETE
                     </button>
 
@@ -44,8 +44,8 @@
                             This action cannot be undone.
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <a class="btn btn-danger" href="{% url 'delete_post' post.slug %}">DELETE</a>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>
+                            <a class="btn btn-danger" href="{% url 'delete_post' post.slug %}" aria-label="Confirm delete">DELETE</a>
                             </div>
                         </div>
                         </div>
@@ -56,9 +56,9 @@
             <form class="d-inline" action="{% url 'post_like' post.slug %}" method="POST">
                 {% csrf_token %}
                 {% if liked %}
-                <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary"><i class="fa-solid fa-thumbs-up"> {{ post.number_of_likes }}</i></button>
+                <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary" aria-label="Like/Unlike post"><i class="fa-solid fa-thumbs-up"> {{ post.number_of_likes }}</i></button>
                 {% else %}
-                <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary"><i class="fa-regular fa-thumbs-up"> {{ post.number_of_likes }}</i></button>
+                <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn btn-primary" aria-label="Like/Unlike post"><i class="fa-regular fa-thumbs-up"> {{ post.number_of_likes }}</i></button>
                 {% endif %}
             </form>
             {% else %}
@@ -132,9 +132,9 @@
         <div class="col-10 mx-auto justify-content-start">
         {% if user.is_superuser %}
         {% if post.featured_post %}
-        <a class="btn btn btn-danger d-block" href="{% url 'feature_post' post.slug %}">Unfeature this post!</a>
+        <a class="btn btn btn-danger d-block" href="{% url 'feature_post' post.slug %}" aria-label="Unfeature post">Unfeature this post!</a>
         {% else %}
-        <a class="btn btn btn-success d-block" href="{% url 'feature_post' post.slug %}">Feature this post!</a>
+        <a class="btn btn btn-success d-block" href="{% url 'feature_post' post.slug %}" aria-label="Feature post">Feature this post!</a>
         {% endif %}
         {% endif %}
         </div>
@@ -157,7 +157,7 @@
             <form method="post">
                 {{ comment_form | crispy }}
                 {% csrf_token %}
-                <button type="submit" class="btn btn-primary mt-3 float-end">Submit</button>
+                <button type="submit" class="btn btn-primary mt-3 float-end" aria-label="Submit">Submit</button>
             </form>
         </div>
     </div>
@@ -175,9 +175,9 @@
                 <div class="comment bg-light rounded p-3">
                     <p class="d-inline fw-bold card-author">{{ comment.author }}</p>
                     <p class="d-inline fw-light"> wrote:</p>
-                    <a class="btn btn-sm btn-success d-inline float-end ms-2" href="{% url 'approve_comment' comment.id %}#unapproved-comments">Approve</a>
+                    <a class="btn btn-sm btn-success d-inline float-end ms-2" href="{% url 'approve_comment' comment.id %}#unapproved-comments" aria-label="Approve comment">Approve</a>
                     {% if user.id == comment.author.id %}
-                    <a class="btn btn-sm btn-danger d-inline float-end" href="{% url 'delete_comment' comment.id %}">Delete</a>
+                    <a class="btn btn-sm btn-danger d-inline float-end" href="{% url 'delete_comment' comment.id %}" aria-label="Delete comment">Delete</a>
                     {% endif %}
                     <p >{{ comment.body | linebreaks }}</p>
                 </div>
@@ -198,7 +198,7 @@
                     <p class="d-inline fw-light"> wrote:</p>
                     {% if user.id == comment.author.id %}
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-sm btn-danger d-inline float-end" data-bs-toggle="modal" data-bs-target="#deleteCommentModal">
+                    <button type="button" class="btn btn-sm btn-danger d-inline float-end" data-bs-toggle="modal" data-bs-target="#deleteCommentModal" aria-label="Delete comment">
                         Delete
                     </button>
                     
@@ -214,8 +214,8 @@
                             This action cannot be undone.
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <a class="btn btn-danger" href="{% url 'delete_comment' comment.id %}">DELETE</a>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>
+                            <a class="btn btn-danger" href="{% url 'delete_comment' comment.id %}" aria-label="Confirm Delete">DELETE</a>
                             </div>
                         </div>
                         </div>
