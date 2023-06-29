@@ -46,7 +46,19 @@ footer {
   color: var(--brand-orange);
 }
 
-/* Cards Post View */
+/* Hero Image */
+
+#hero-container {
+  height: 80vh;
+  width: 100vw;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: #333;
+  background-blend-mode: overlay;
+}
+
+/* Posts/Builds Thumbnail List */
 
 .card-body {
   padding: 0;
@@ -93,19 +105,7 @@ footer {
   z-index: 2;
 }
 
-/* Hero Image */
-
-#hero-container {
-  height: 80vh;
-  width: 100vw;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-color: #333;
-  background-blend-mode: overlay;
-}
-
-/* Post Detail view styling */
+/* Post Detail View */
 
 #post-main-img img {
   max-height: 50vh;
@@ -116,7 +116,7 @@ footer {
   text-overflow: ellipsis;
 }
 
-/* Add/Edit Post form styling */
+/* Add/Edit Post Form */
 form .form-group {
   margin-bottom: 1rem;
   padding: 1rem;
