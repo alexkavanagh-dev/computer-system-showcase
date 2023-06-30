@@ -12,6 +12,10 @@ from .forms import CommentForm, PostForm
 
 
 class PostList(generic.ListView):
+    """
+    Create list from all posts in database, sorted by time of creation, to
+    display in a list paginated by 12 for index.html template
+    """
     model = Post
     querySet = Post.objects.order_by('-created_on')
     template_name = 'index.html'
@@ -19,12 +23,20 @@ class PostList(generic.ListView):
 
 
 class PostDetail(View):
+    """
+    Class based view for post detail template/page
+    """
 
     def get(self, request, slug, *args, **kwargs):
+        """
+        Function for GET requests to post detail page that gets the selected
+        post, related comments, liked status and comment form
+        """
         queryset = Post.objects
         post = get_object_or_404(queryset, slug=slug)
         comments = post.comments.filter(approved=True).order_by('-created_on')
-        unapproved_comments = post.comments.filter(approved=False).order_by('-created_on')
+        unapproved_comments = \
+            post.comments.filter(approved=False).order_by('-created_on')
         liked = False
         if post.likes.filter(id=self.request.user.id).exists():
             liked = True
@@ -43,6 +55,10 @@ class PostDetail(View):
         )
 
     def post(self, request, slug, *args, **kwargs):
+        """
+        Function for POST requests to post detail page that handles users
+        making comments on posts
+        """
         queryset = Post.objects
         post = get_object_or_404(queryset, slug=slug)
         comments = post.comments.filter(approved=True).order_by('-created_on')
@@ -66,24 +82,28 @@ class PostDetail(View):
             comment.save()
             comment_form = CommentForm()
         else:
-            messages.error(request, 'Please check that your form has been filled correctly.')
+            messages.error(request, 'Please check that your form has '
+                                    'been filled correctly.')
             comment_form = CommentForm()
 
-        return render(
-            request,
-            "post_detail.html",
-            {
-                "post": post,
-                "comments": comments,
-                "awaiting_approval": awaiting_approval,
-                "comment_form": comment_form,
-                "liked": liked
-            },
-        )
+        template = "post_detail.html"
+        context = {
+            "post": post,
+            "comments": comments,
+            "awaiting_approval": awaiting_approval,
+            "comment_form": comment_form,
+            "liked": liked}
+
+        return render(request, template, context)
+
 
 @method_decorator(login_required, name="dispatch")
 class PostLike(View):
-
+    """
+    Add or remove user from a posts likes list when a like button is clicked
+    depending on if they are already in the likes list. Return user back to the
+    page they sent the request from.
+    """
     def post(self, request, slug):
         post = get_object_or_404(Post, slug=slug)
 
@@ -97,7 +117,10 @@ class PostLike(View):
 
 @login_required
 def add_post(request):
-
+    """
+    Take information/image submitted by user on the add post template and
+    create an entry in the database for their post
+    """
     if request.method == 'POST':
         post_form = PostForm(data=request.POST, files=request.FILES)
 
@@ -110,7 +133,8 @@ def add_post(request):
             messages.success(request, 'Your post was created successfully!')
             return redirect(reverse('home'))
         else:
-            messages.error(request, 'Please check that your form has been filled correctly.')
+            messages.error(request, 'Please check that your form has been '
+                                    'filled correctly.')
             post_form = PostForm()
 
     else:
@@ -121,7 +145,10 @@ def add_post(request):
 
 @login_required
 def edit_post(request, slug):
-
+    """
+    Take information/image submitted by user on the edit post template and
+    edit the existing entry in the database for their post
+    """
     queryset = Post.objects
     post = get_object_or_404(queryset, slug=slug)
     edit_form = PostForm(instance=post)
@@ -129,7 +156,8 @@ def edit_post(request, slug):
     if request.user.id == post.author.id:
         if request.method == 'POST':
 
-            edit_form = PostForm(data=request.POST, files=request.FILES, instance=post)
+            edit_form = \
+                PostForm(data=request.POST, files=request.FILES, instance=post)
 
             if edit_form.is_valid():
                 new_post = edit_form.save(commit=False)
@@ -140,11 +168,13 @@ def edit_post(request, slug):
                 messages.success(request, 'Your post was edited successfully!')
                 return redirect(reverse('home'))
             else:
-                messages.error(request, 'Please check that your form has been filled correctly.')
+                messages.error(request, 'Please check that your form has been '
+                                        'filled correctly.')
                 edit_form = PostForm(instance=post)
 
     else:
-        messages.error(request, 'Sorry, you do not have permission to perform that action.')
+        messages.error(request, 'Sorry, you do not have permission to perform '
+                                'that action.')
         return redirect(reverse('home'))
 
     template = 'edit_post.html'
@@ -158,6 +188,10 @@ def edit_post(request, slug):
 
 @login_required
 def delete_post(request, slug):
+    """
+    Delete the selected post from the database. This will also delete comments
+    for this post
+    """
 
     queryset = Post.objects
     post = get_object_or_404(queryset, slug=slug)
@@ -168,12 +202,16 @@ def delete_post(request, slug):
         return redirect(reverse('home'))
 
     else:
-        messages.error(request, 'Sorry, you do not have permission to perform that action.')
+        messages.error(request, 'Sorry, you do not have permission to perform '
+                                'that action.')
         return redirect(reverse('home'))
 
 
 @login_required
 def delete_comment(request, id):
+    """
+    Delete the selected comment from the database
+    """
 
     queryset = Comment.objects
     comment = get_object_or_404(queryset, id=id)
@@ -184,11 +222,16 @@ def delete_comment(request, id):
         return redirect(reverse('home'))
 
     else:
-        messages.error(request, 'Sorry, you do not have permission to perform that action.')
+        messages.error(request, 'Sorry, you do not have permission to perform '
+                                'that action.')
 
 
 @login_required
 def approve_comment(request, id):
+    """
+    Set the approved boolean flag in models on a comment to True
+    For admin use only
+    """
 
     if request.user.is_superuser:
 
@@ -201,12 +244,17 @@ def approve_comment(request, id):
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
     else:
-        messages.error(request, 'Sorry, you do not have permission to perform that action.')
+        messages.error(request, 'Sorry, you do not have permission to perform '
+                                'that action.')
         return redirect(reverse('home'))
 
 
 @login_required
 def feature_post(request, slug):
+    """
+    Switch the featured_post boolean flag in models for a post
+    between True and False depending on it's previous state
+    """
 
     if request.user.is_superuser:
 
@@ -227,11 +275,16 @@ def feature_post(request, slug):
             return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
     else:
-        messages.error(request, 'Sorry, you do not have permission to perform that action.')
+        messages.error(request, 'Sorry, you do not have permission to perform '
+                                'that action.')
         return redirect(reverse('home'))
 
 
 def search_posts(request):
+    """
+    Use a search query from a user to filter posts in the database
+    before displaying results matching the user's query
+    """
 
     if request.method == "GET" and 'q' in request.GET:
 
@@ -266,12 +319,17 @@ def search_posts(request):
         return render(request, template, context)
 
     else:
-        messages.error(request, 'Sorry, something went wrong. Sending you back to home!')
+        messages.error(request, 'Sorry, something went wrong. Sending you back'
+                                ' to home!')
         return redirect(reverse('home'))
 
 
 @login_required
 def account_likes(request, id):
+    """
+    Filter posts in the datebase by a specific user being in that
+    posts likes before displaying results matching that filter
+    """
 
     if request.user.id == id:
 
@@ -288,5 +346,6 @@ def account_likes(request, id):
         return render(request, template, context)
 
     else:
-        messages.error(request, 'Sorry, you do not have access to that page. Sending you back to home!')
+        messages.error(request, 'Sorry, you do not have access to that page. '
+                                'Sending you back to home!')
         return redirect(reverse('home'))
