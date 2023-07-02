@@ -14,7 +14,7 @@
             <div class="row mt-4">
             <!-- List results from users search query -->
             {% for post in page_obj %}
-                <div id="post-thumb" class="col-lg-3">
+                <div class="col-lg-3">
                     <div class="card mb-4">
                         <a href="{% url 'post_detail' post.slug %}" class="card-img-link" aria-label="Go to post detail page">
                             <!-- Show featured ribbon if post is featured by admin -->
