@@ -2,26 +2,8 @@
 :root{
     --brand-orange: #ff8b04;
     --brand-light-blue: #9fcdff;
-    --brand-dark-blue: #5284ff;
+    --brand-dark-blue: #1f5eff;
   }
-  
-/* Override Bootstrap Defaults */
-.btn-primary {
---bs-btn-color: #fff;
---bs-btn-bg: var(--brand-orange);
---bs-btn-border-color: var(--brand-orange);
---bs-btn-hover-color: #fff;
---bs-btn-hover-bg: #da7501;
---bs-btn-hover-border-color: #da7501;
---bs-btn-focus-shadow-rgb: 49,132,253;
---bs-btn-active-color: #fff;
---bs-btn-active-bg: var(--brand-orange);
---bs-btn-active-border-color: var(--brand-orange);
---bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
---bs-btn-disabled-color: #fff;
---bs-btn-disabled-bg: var(--brand-orange);
---bs-btn-disabled-border-color: var(--brand-orange);
-}
 
 /* General Styling */
 
@@ -95,7 +77,7 @@ footer {
 }
 
 .card-author {
-  color: var(--brand-orange);
+  color: #333;
 }
 
 .featured-ribbon {

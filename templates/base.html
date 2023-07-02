@@ -71,10 +71,11 @@
                     <li class="nav-item ms-2">
                         <div class="dropdown">
                             <button type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <i class="fa-solid fa-magnifying-glass"></i><span class="d-none">Search</span>
                             </button>
                             <form class="dropdown-menu dropdown-menu-end p-3" action="{% url 'search_posts' %}" method="GET">
-                                <input type="search" class="form-control" placeholder="Search" name="q" required>
+                                <label for="search" class="d-none">Search</label>
+                                <input id="search" type="search" class="form-control" placeholder="Enter search..." name="q" required>
                                 <button type="submit" class="btn mt-2 btn-primary" aria-label="Submit">Submit</button>
                             </form>
                         </div>
